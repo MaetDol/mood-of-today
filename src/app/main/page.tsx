@@ -39,8 +39,17 @@ const Emotions = [
 
 export default function Page() {
   return (
-    <main>
-      <SlideCircles circles={Emotions} />
+    <main className="bg-white px-5 py-6">
+      <div className="flex items-center gap-4">
+        <SlideCircles circles={Emotions} />
+        <input
+          className="px-3 py-2 rounded-full border border-slate-400
+          w-[200px]
+        placeholder:slate-400
+        "
+          placeholder="왜 그런 기분이 들었나요?"
+        />
+      </div>
     </main>
   );
 }
