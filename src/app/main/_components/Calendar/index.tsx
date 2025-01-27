@@ -27,9 +27,9 @@ export function Calendar() {
       clearTimeout(lastPositionTimeoutIdRef.current);
 
       const { width } = dateRef.current.getBoundingClientRect();
-      const halfWidth = width / 2;
+      const threshold = width / 4;
 
-      if (translateX > halfWidth) {
+      if (translateX > threshold) {
         setTranslateX(width + 16);
         lastPositionTimeoutIdRef.current = window.setTimeout(() => {
           setIsResetingPosition(true);
@@ -40,7 +40,7 @@ export function Calendar() {
         return;
       }
 
-      if (translateX < -halfWidth) {
+      if (translateX < -threshold) {
         setTranslateX(-width - 16);
         lastPositionTimeoutIdRef.current = window.setTimeout(() => {
           setIsResetingPosition(true);
