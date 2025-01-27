@@ -7,8 +7,6 @@ export function getDates(year: number, month: number) {
   // 28 29 30 31 1 2 3 처럼 보이게 하기 위해서!
   const startDateOfPrevMonth = new Date(year, month - 1, 1 - firstDay);
   const endDateOfPrevMonth = new Date(year, month - 1, 0);
-  console.log(startDateOfPrevMonth, endDateOfPrevMonth);
-
   for (
     let i = startDateOfPrevMonth.getDate();
     i <= endDateOfPrevMonth.getDate();
@@ -25,6 +23,16 @@ export function getDates(year: number, month: number) {
 
   for (let i = 1; i <= lastDate.getDate(); i++) {
     const date = new Date(year, month - 1, i);
+    dates.push({
+      month: date.getMonth() + 1,
+      date: date.getDate(),
+    });
+  }
+
+  // 다음 달의 첫째 날부터 토요일까지 가져온다
+  const restDays = (6 - lastDate.getDay()) % 6;
+  for (let i = 1; i <= restDays; i++) {
+    const date = new Date(year, month, i);
     dates.push({
       month: date.getMonth() + 1,
       date: date.getDate(),
