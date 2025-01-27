@@ -67,7 +67,8 @@ export default function Page() {
 
   return (
     <main>
-      <div className="w-[64px] overflow-hidden" {...dragHandlers}>
+      <div className="w-[64px] overflow-hidden relative" {...dragHandlers}>
+        <div className="absolute h-full left-0 top-0 shadow-[0_0_16px_4px] shadow-white z-1" />
         <div
           className="flex gap-2 w-fit transition-transform"
           style={{
@@ -79,7 +80,7 @@ export default function Page() {
           {Emotions.map((emotion, i) => (
             <div
               key={emotion.id}
-              style={{ transform: idx !== i ? "scale(0.9)" : "" }}
+              style={{ transform: idx !== i ? "scale(0.95)" : "" }}
               className={`rounded-full w-[40px] h-[40px] transition-transform ${emotion.color}`}
             />
           ))}
