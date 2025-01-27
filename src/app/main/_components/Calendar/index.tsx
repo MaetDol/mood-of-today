@@ -3,33 +3,51 @@ import { useDragHandler } from "@/shared/hooks/useDragHandler";
 import { getDates } from "@/shared/utils/getDates";
 import { useRef, useState } from "react";
 
+const SLIDE_TRANSITION_DURATION = 300;
+
 export function Calendar() {
   const [calendar, setCalendar] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   });
 
+  const [isResetingPosition, setIsResetingPosition] = useState(false);
+  const lastPositionTimeoutIdRef = useRef<number>(0);
+
   const dateRef = useRef<HTMLDivElement>(null);
   const [translateX, setTranslateX] = useState(0);
   const { dragHandlers, isDragging } = useDragHandler({
     onDragging: (xMove) => {
+      setIsResetingPosition(false);
       setTranslateX((prev) => prev + xMove);
     },
     onClick: () => {},
     onDragStop: () => {
       if (!dateRef.current) return;
+      clearTimeout(lastPositionTimeoutIdRef.current);
+
       const { width } = dateRef.current.getBoundingClientRect();
       const halfWidth = width / 2;
 
       if (translateX > halfWidth) {
-        prevMonth();
-        setTranslateX(0);
+        setTranslateX(width + 16);
+        lastPositionTimeoutIdRef.current = window.setTimeout(() => {
+          setIsResetingPosition(true);
+          prevMonth();
+          setTranslateX(0);
+        }, SLIDE_TRANSITION_DURATION);
+
         return;
       }
 
       if (translateX < -halfWidth) {
-        nextMonth();
-        setTranslateX(0);
+        setTranslateX(-width - 16);
+        lastPositionTimeoutIdRef.current = window.setTimeout(() => {
+          setIsResetingPosition(true);
+          nextMonth();
+          setTranslateX(0);
+        }, SLIDE_TRANSITION_DURATION);
+
         return;
       }
 
@@ -92,7 +110,9 @@ export function Calendar() {
 
       <div
         className={`flex gap-2 relative ${
-          isDragging ? "" : "transition-transform"
+          isResetingPosition || isDragging
+            ? ""
+            : "transition-transform duration-300"
         }`}
         {...dragHandlers}
         style={{
