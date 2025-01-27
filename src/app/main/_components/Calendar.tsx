@@ -27,26 +27,37 @@ export function Calendar() {
     setCalendar({ year, month: month + 1 });
   };
   return (
-    <div
-      className="grid grid-cols-[repeat(7,16px)] 
-      justify-items-center gap-x-6"
-    >
-      <div className="text-red-600 mb-4">일</div>
-      <div>월</div>
-      <div>화</div>
-      <div>수</div>
-      <div>목</div>
-      <div>금</div>
-      <div className="text-blue-600">토</div>
+    <div className="text-slate-700">
+      <div className="flex justify-between mb-2">
+        <span className="font-bold">
+          {calendar.month.toString().padStart(2, "0")} 월
+        </span>
+        <span>{calendar.year}</span>
+      </div>
 
-      {getDates(calendar.year, calendar.month).map(({ month, date }) => (
-        <div
-          key={month.toString() + date}
-          className={`mb-1 ${month !== calendar.month ? "opacity-20" : ""}`}
-        >
-          {date}
-        </div>
-      ))}
+      <div className="mb-4 w-full grid grid-cols-[repeat(7,16px)] col-span-7 justify-items-center gap-x-6">
+        <div className="text-red-600">일</div>
+        <div>월</div>
+        <div>화</div>
+        <div>수</div>
+        <div>목</div>
+        <div>금</div>
+        <div className="text-blue-600">토</div>
+      </div>
+
+      <div
+        className="grid grid-cols-[repeat(7,16px)] 
+      justify-items-center gap-x-6"
+      >
+        {getDates(calendar.year, calendar.month).map(({ month, date }) => (
+          <div
+            key={month.toString() + date}
+            className={`mb-1 ${month !== calendar.month ? "opacity-20" : ""}`}
+          >
+            {date}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
