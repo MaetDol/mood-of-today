@@ -40,11 +40,15 @@ export const useDragHandler = ({
   const mouseUp = useCallback(() => {
     const hasMovedShortly =
       isDraggingRef.current && (prev.current?.distance ?? 0) < 10;
-    if (hasMovedShortly) onClick?.();
 
     prev.current = null;
     isDraggingRef.current = false;
     setIsDragging(false);
+
+    if (hasMovedShortly) {
+      onClick?.();
+      return;
+    }
     onDragStop?.();
   }, [onClick, onDragStop]);
 
