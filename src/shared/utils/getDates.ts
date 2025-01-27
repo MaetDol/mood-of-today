@@ -13,8 +13,6 @@ export function getDates(year: number, month: number) {
     i++
   ) {
     const date = new Date(year, month - 2, i);
-    console.log(date);
-
     dates.push({
       month: date.getMonth() + 1,
       date: date.getDate(),

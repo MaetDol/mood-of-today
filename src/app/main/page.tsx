@@ -101,7 +101,7 @@ export default function Page() {
         {getDates(calendar.year, calendar.month).map(({ month, date }) => (
           <div
             key={month.toString() + date}
-            className={month !== calendar.month ? "opacity-20" : ""}
+            className={`mb-1 ${month !== calendar.month ? "opacity-20" : ""}`}
           >
             {date}
           </div>
