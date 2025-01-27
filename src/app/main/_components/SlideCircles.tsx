@@ -23,6 +23,15 @@ export function SlideCircles({ circles, onChange }: Props) {
     onDragging: (xMove) => {
       setTranslateX((prev) => prev + xMove);
     },
+    onClick: () => {
+      const i = idx + 1;
+      if (i >= circles.length) {
+        updateIdx(0);
+        return;
+      }
+
+      updateIdx(i);
+    },
     onDragStop: () => {
       const i = idx + Math.round(-translateX / 48);
       setTranslateX(0);
