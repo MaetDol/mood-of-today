@@ -57,7 +57,9 @@ export function SlideCircles({ circles, onChange }: Props) {
       <div className="absolute h-full left-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
       <div className="absolute h-full right-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
       <div
-        className="flex gap-2 w-fit transition-transform"
+        className={`flex gap-2 w-fit ${
+          isDragging ? "transition-none" : "transition-transform"
+        }`}
         style={{
           transform: isDragging
             ? `translateX(${currentX + translateX}px)`
