@@ -2,8 +2,7 @@
 
 import { Calendar } from "@/app/main/_components/Calendar";
 import { MoodInput } from "@/app/main/_components/MoodInput";
-import { SlideCircles } from "@/app/main/_components/SlideCircles";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // 색깔 다시 정할 필요가 있음
 const Emotions = [
