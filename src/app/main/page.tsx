@@ -2,7 +2,7 @@
 
 import { Calendar } from "@/app/main/_components/Calendar";
 import { MoodInput } from "@/app/main/_components/MoodInput";
-import { useState } from "react";
+import { useMoodData } from "@/app/main/_hooks/useMoodData";
 
 // 색깔 다시 정할 필요가 있음
 const Emotions = [
@@ -38,18 +38,8 @@ const Emotions = [
   },
 ];
 
-type Mood = {
-  id: number;
-  name: string;
-  moodId: number;
-};
-
 export default function Page() {
-  const [moods, setMoods] = useState<Mood[]>([]);
-
-  const addMood = (mood: Mood) => {
-    setMoods((prev) => [...prev, mood]);
-  };
+  const { addMood, moods } = useMoodData();
 
   return (
     <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen">
