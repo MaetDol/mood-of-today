@@ -1,6 +1,7 @@
 "use client";
 
 import { SlideCircles } from "@/app/main/_components/SlideCircles";
+import { Mood } from "@/shared/types/mood";
 import { useRef } from "react";
 
 // 색깔 다시 정할 필요가 있음
@@ -37,12 +38,6 @@ const Emotions = [
   },
 ];
 
-type Mood = {
-  id: number;
-  name: string;
-  moodId: number;
-};
-
 interface Props {
   onCreateMood: (mood: Mood) => void;
 }
@@ -78,6 +73,7 @@ export function MoodInput({ onCreateMood }: Props) {
       id: Date.now(),
       name: value,
       moodId: mood.id,
+      createdAt: new Date(),
     });
     target.value = "";
   };
