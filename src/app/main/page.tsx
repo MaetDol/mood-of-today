@@ -1,6 +1,7 @@
 "use client";
 
 import { Calendar } from "@/app/main/_components/Calendar";
+import { MoodInput } from "@/app/main/_components/MoodInput";
 import { SlideCircles } from "@/app/main/_components/SlideCircles";
 import { useRef, useState } from "react";
 
@@ -45,62 +46,16 @@ type Mood = {
 };
 
 export default function Page() {
-  const moodRef = useRef<(typeof Emotions)[number]>(null);
   const [moods, setMoods] = useState<Mood[]>([]);
-  const handleInput: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const mood = moodRef.current;
-    const target = e.target;
-    if (!mood) {
-      return;
-    }
 
-    if (!(target instanceof HTMLInputElement)) {
-      return;
-    }
-
-    if (e.key !== "Enter") {
-      return;
-    }
-
-    const value = target.value.trim();
-    if (!value) {
-      return;
-    }
-
-    const isComposing = e.nativeEvent.isComposing;
-    if (isComposing) {
-      return;
-    }
-
-    setMoods((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        name: value,
-        moodId: mood.id,
-      },
-    ]);
-    target.value = "";
-  };
-
-  const handleChangeMood = (idx: number) => {
-    moodRef.current = Emotions[idx];
+  const addMood = (mood: Mood) => {
+    setMoods((prev) => [...prev, mood]);
   };
 
   return (
     <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen">
       <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
-        <div className="flex items-center gap-4 shrink-0">
-          <SlideCircles circles={Emotions} onChange={handleChangeMood} />
-          <input
-            className="px-3 py-2 rounded-full border border-slate-400
-          w-[200px]
-        placeholder:slate-400
-        "
-            placeholder="왜 그런 기분이 들었나요?"
-            onKeyDown={handleInput}
-          />
-        </div>
+        <MoodInput onCreateMood={(mood) => addMood(mood)} />
 
         <ol className="ml-4 overflow-auto flex flex-col gap-2">
           {moods.map((mood) => (
