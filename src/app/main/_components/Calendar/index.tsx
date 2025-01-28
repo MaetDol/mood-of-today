@@ -1,6 +1,5 @@
 import { Dates } from "@/app/main/_components/Calendar/components/Dates";
 import { useDragHandler } from "@/shared/hooks/useDragHandler";
-import { getDates } from "@/shared/utils/getDates";
 import { useRef, useState } from "react";
 
 const SLIDE_TRANSITION_DURATION = 300;

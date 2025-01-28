@@ -2,9 +2,6 @@
 
 import { Calendar } from "@/app/main/_components/Calendar";
 import { SlideCircles } from "@/app/main/_components/SlideCircles";
-import { useDragHandler } from "@/shared/hooks/useDragHandler";
-import { getDates } from "@/shared/utils/getDates";
-import { useEffect, useState } from "react";
 
 const Emotions = [
   {
