@@ -17,7 +17,7 @@ type DragHandlerSet =
       onTouchStart: (e: React.TouchEvent) => void;
       onTouchEnd: (e: React.TouchEvent) => void;
     }
-  | {};
+  | Record<string, unknown>;
 
 type UseDragReturns = {
   isDragging: boolean;
