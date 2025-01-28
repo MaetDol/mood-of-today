@@ -62,7 +62,13 @@ export default function Page() {
       return;
     }
 
-    if (!target.value.trim()) {
+    const value = target.value.trim();
+    if (!value) {
+      return;
+    }
+
+    const isComposing = e.nativeEvent.isComposing;
+    if (isComposing) {
       return;
     }
 
@@ -70,7 +76,7 @@ export default function Page() {
       ...prev,
       {
         id: Date.now(),
-        name: target.value,
+        name: value,
         moodId: mood.id,
       },
     ]);
@@ -82,8 +88,8 @@ export default function Page() {
   };
 
   return (
-    <main className="bg-white px-5 py-6 flex flex-col flex-1">
-      <div className="flex-1 shrink-0 flex flex-col gap-3">
+    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen">
+      <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
         <div className="flex items-center gap-4 shrink-0">
           <SlideCircles circles={Emotions} onChange={handleChangeMood} />
           <input
