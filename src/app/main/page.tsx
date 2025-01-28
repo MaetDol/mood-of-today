@@ -36,34 +36,45 @@ const Emotions = [
     name: "불안함",
     id: 6,
   },
-] 
+];
 
 type Mood = {
   id: number;
   name: string;
   moodId: number;
-}
+};
 
 export default function Page() {
-
-  const moodRef = useRef<typeof Emotions[number]>(null);
+  const moodRef = useRef<(typeof Emotions)[number]>(null);
   const [moods, setMoods] = useState<Mood[]>([]);
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter') {
-      setMoods((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          name: e.target.value as any,
-          moodId: moodRef.current.id,
-        },
-      ]);
-      e.target.value = '';
-  }
+  const handleInput: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const mood = moodRef.current;
+    const target = e.target;
+    if (!mood) {
+      return;
+    }
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    if (e.key !== "Enter") {
+      return;
+    }
+
+    setMoods((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: target.value,
+        moodId: mood.id,
+      },
+    ]);
+    target.value = "";
+  };
 
   const handleChangeMood = (idx: number) => {
     moodRef.current = Emotions[idx];
-  }
+  };
 
   return (
     <main className="bg-white px-5 py-6 flex flex-col flex-1">
@@ -76,6 +87,7 @@ export default function Page() {
         placeholder:slate-400
         "
             placeholder="왜 그런 기분이 들었나요?"
+            onKeyDown={handleInput}
           />
         </div>
 
@@ -84,6 +96,16 @@ export default function Page() {
             <div className="w-8 h-8 rounded-full bg-slate-400" />산 아이스크림이
             녹아있었음
           </li>
+          {moods.map((mood) => (
+            <li key={mood.id} className="flex items-center gap-2">
+              <div
+                className={`w-8 h-8 rounded-full ${
+                  Emotions.find((it) => it.id === mood.moodId)?.color ?? ""
+                }`}
+              />
+              {mood.name}
+            </li>
+          ))}
         </ol>
       </div>
 
