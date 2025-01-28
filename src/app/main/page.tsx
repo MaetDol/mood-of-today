@@ -53,11 +53,16 @@ export default function Page() {
     if (!mood) {
       return;
     }
+
     if (!(target instanceof HTMLInputElement)) {
       return;
     }
 
     if (e.key !== "Enter") {
+      return;
+    }
+
+    if (!target.value.trim()) {
       return;
     }
 
@@ -91,11 +96,7 @@ export default function Page() {
           />
         </div>
 
-        <ol className="ml-4 overflow-auto">
-          <li className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-slate-400" />산 아이스크림이
-            녹아있었음
-          </li>
+        <ol className="ml-4 overflow-auto flex flex-col gap-2">
           {moods.map((mood) => (
             <li key={mood.id} className="flex items-center gap-2">
               <div
