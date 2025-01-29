@@ -7,7 +7,7 @@ class LocalStorageService {
 
   public setItem(
     key: LocalStorageService["Key"][keyof LocalStorageService["Key"]],
-    value: any
+    value: unknown
   ) {
     window.localStorage.setItem(key, JSON.stringify(value));
   }
