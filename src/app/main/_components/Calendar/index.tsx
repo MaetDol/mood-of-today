@@ -1,4 +1,6 @@
 import { Dates } from "@/app/main/_components/Calendar/components/Dates";
+import { useEmotions } from "@/app/main/_hooks/useEmotions";
+import { useMoodData } from "@/app/main/_hooks/useMoodData";
 import { useDragHandler } from "@/shared/hooks/useDragHandler";
 import { useRef, useState } from "react";
 
@@ -88,6 +90,25 @@ export function Calendar() {
   const prevCalendar = getRelativeCalendar(calendar, -1);
   const nextCalendar = getRelativeCalendar(calendar, +1);
 
+  const { getEmotionById } = useEmotions();
+  const { moods } = useMoodData();
+  const colors = moods.reduce((acc, mood) => {
+    const month = mood.createdAt.getMonth() + 1;
+    const date = mood.createdAt.getDate();
+    if (!acc[month]) {
+      acc[month] = { [date]: [] };
+    }
+
+    const emotion = getEmotionById(mood.moodId);
+    if (!emotion) {
+      console.error(`Emotion not found for mood: ${mood}`);
+      return acc;
+    }
+
+    acc[month][date].push(emotion.color);
+    return acc;
+  }, {} as Record<string, Record<string, string[]>>);
+
   return (
     <div className="text-slate-700 overflow-hidden p-4">
       <div className="flex justify-between mb-2">
@@ -122,16 +143,24 @@ export function Calendar() {
           className="absolute right-[calc(100%_+_16px)]"
           key={`${prevCalendar.year}_${prevCalendar.month}`}
         >
-          <Dates month={prevCalendar.month} year={prevCalendar.year} />
+          <Dates
+            month={prevCalendar.month}
+            year={prevCalendar.year}
+            colors={colors}
+          />
         </div>
         <div ref={dateRef} key={`${calendar.year}_${calendar.month}`}>
-          <Dates month={calendar.month} year={calendar.year} />
+          <Dates month={calendar.month} year={calendar.year} colors={colors} />
         </div>
         <div
           className="absolute left-[calc(100%_+_16px)]"
           key={`${nextCalendar.year}_${nextCalendar.month}`}
         >
-          <Dates month={nextCalendar.month} year={nextCalendar.year} />
+          <Dates
+            month={nextCalendar.month}
+            year={nextCalendar.year}
+            colors={colors}
+          />
         </div>
       </div>
     </div>
