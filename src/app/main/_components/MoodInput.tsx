@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function MoodInput({ onCreateMood }: Props) {
-  const Emotions = useEmotions();
+  const { Emotions } = useEmotions();
   const moodRef = useRef<(typeof Emotions)[number]>(null);
   const handleInput: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     const mood = moodRef.current;

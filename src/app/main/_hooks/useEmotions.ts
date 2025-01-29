@@ -33,5 +33,6 @@ const Emotions = [
 ];
 
 export function useEmotions() {
-  return Emotions;
+  const getEmotionById = (id: number) => Emotions.find((it) => it.id === id);
+  return { Emotions, getEmotionById };
 }

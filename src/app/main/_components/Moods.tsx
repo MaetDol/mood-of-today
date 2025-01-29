@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function Moods({ moods }: Props) {
-  const Emotions = useEmotions();
+  const { Emotions } = useEmotions();
 
   return (
     <ol className="ml-4 overflow-auto flex flex-col gap-2">
