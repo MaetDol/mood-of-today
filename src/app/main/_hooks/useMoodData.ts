@@ -1,11 +1,17 @@
+"use client";
+
+import { useLocalStorageState } from "@/shared/hooks/useLocalStorageState";
+import { localStorageService } from "@/shared/services/localStorageService";
 import { Mood } from "@/shared/types/mood";
-import { useState } from "react";
 
 export function useMoodData() {
-  const [moods, setMoods] = useState<Mood[]>([]);
+  const [moods, setMoods] = useLocalStorageState<Mood[]>(
+    localStorageService.Key.MOODS,
+    []
+  );
 
   const addMood = (mood: Mood) => {
-    setMoods((prev) => [...prev, mood]);
+    setMoods([...moods, mood]);
   };
 
   return { moods, addMood };
