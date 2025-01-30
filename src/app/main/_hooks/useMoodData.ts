@@ -18,5 +18,18 @@ export function useMoodData() {
     setMoods([mood, ...moods]);
   };
 
-  return { moods, addMood };
+  const getMoodsByDate = (date: Date) => {
+    return moods.filter(
+      ({ createdAt }) =>
+        createdAt.getDate() === date.getDate() &&
+        createdAt.getMonth() === date.getMonth() &&
+        createdAt.getFullYear() === date.getFullYear()
+    );
+  };
+
+  return {
+    getMoodsByDate,
+    moods,
+    addMood,
+  };
 }
