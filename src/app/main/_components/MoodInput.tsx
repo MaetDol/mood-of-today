@@ -44,6 +44,7 @@ export function MoodInput({ onCreateMood }: Props) {
       createdAt: new Date(),
     });
     target.value = "";
+    target.blur();
   };
 
   const handleChangeMood = (idx: number) => {
