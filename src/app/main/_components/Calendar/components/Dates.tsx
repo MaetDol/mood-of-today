@@ -20,28 +20,28 @@ justify-items-center gap-x-6"
           }`}
         >
           {date}
-          <div className="rounded-[2px] overflow-hidden relative w-4 h-4">
+          <div className="rounded-[2px] overflow-hidden relative w-4 h-4 z-0">
             <div
               className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[-8px] top-[-8px]
+                left-[-8px] top-[-8px] z-4
                 ${getColor(colors, m, date, 0)}
               `}
             />
             <div
               className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[6px] top-[-6px]
+                left-[6px] top-[-6px] z-3
                 ${getColor(colors, m, date, 1)}
               `}
             />
             <div
               className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[-10px] top-[6px]
+                left-[-10px] top-[6px] z-2
                 ${getColor(colors, m, date, 2)}
               `}
             />
             <div
               className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[6px] top-[6px]
+                left-[6px] top-[6px] z-1
                 ${getColor(colors, m, date, 3)}
               `}
             />
