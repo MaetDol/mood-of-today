@@ -10,15 +10,21 @@ import { useState } from "react";
 
 export default function Page() {
   const { addMood, getMoodsByDate, moods } = useMoodData();
-  const [showBottomSheet, setShowBottomSheet] = useState(true);
+  const [isShowBottomSheet, setIsShowBottomSheet] = useState(true);
+  const showBottomSheet = () => {
+    setIsShowBottomSheet(true);
+  };
+  const closeBottomSheet = () => {
+    setIsShowBottomSheet(false);
+  };
 
   const onMoodCreate = (mood: Mood) => {
     addMood(mood);
-    setShowBottomSheet(false);
+    closeBottomSheet();
   };
 
   return (
-    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-20">
+    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-20 relative">
       <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
         <MoodInput onCreateMood={(mood) => addMood(mood)} />
         <Moods moods={getMoodsByDate(new Date())} />
@@ -28,9 +34,18 @@ export default function Page() {
         <Calendar moods={moods} />
       </div>
 
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+        <button
+          className="bg-slate-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-[32px]"
+          onClick={() => showBottomSheet()}
+        >
+          +
+        </button>
+      </div>
+
       <BottomSheet
-        visible={showBottomSheet}
-        onClose={() => setShowBottomSheet(false)}
+        visible={isShowBottomSheet}
+        onClose={() => closeBottomSheet()}
       >
         <MoodInput onCreateMood={(mood) => onMoodCreate(mood)} />
       </BottomSheet>
