@@ -95,33 +95,36 @@ export function Calendar({ moods }: Props) {
   const nextCalendar = getRelativeCalendar(calendar, +1);
 
   const { getEmotionById } = useEmotions();
-  const colors = moods.reduce((acc, mood) => {
-    const month = mood.createdAt.getMonth() + 1;
-    const date = mood.createdAt.getDate();
-    if (!acc[month]) {
-      acc[month] = { [date]: [] };
-    }
-    if (!acc[month][date]) {
-      acc[month][date] = [];
-    }
+  const colors = moods.reduce<Record<string, Record<string, string[]>>>(
+    (acc, mood) => {
+      const month = mood.createdAt.getMonth() + 1;
+      const date = mood.createdAt.getDate();
+      if (!acc[month]) {
+        acc[month] = { [date]: [] };
+      }
+      if (!acc[month][date]) {
+        acc[month][date] = [];
+      }
 
-    const emotion = getEmotionById(mood.moodId);
-    if (!emotion) {
-      console.error(`Emotion not found for mood: ${mood}`);
+      const emotion = getEmotionById(mood.moodId);
+      if (!emotion) {
+        console.error(`Emotion not found for mood: ${mood}`);
+        return acc;
+      }
+
+      const isEmpty = acc[month][date].length < 2;
+      const hasOtherColor = acc[month][date]
+        .slice(-2)
+        .some((it) => it !== emotion.color);
+
+      if (isEmpty || hasOtherColor) {
+        acc[month][date].push(emotion.color);
+      }
+
       return acc;
-    }
-
-    const isEmpty = acc[month][date].length < 2;
-    const hasOtherColor = acc[month][date]
-      .slice(-2)
-      .some((it) => it !== emotion.color);
-
-    if (isEmpty || hasOtherColor) {
-      acc[month][date].push(emotion.color);
-    }
-
-    return acc;
-  }, {} as Record<string, Record<string, string[]>>);
+    },
+    {}
+  );
 
   return (
     <div className="text-slate-700 overflow-hidden p-4">
