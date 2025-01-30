@@ -98,6 +98,9 @@ export function Calendar() {
     if (!acc[month]) {
       acc[month] = { [date]: [] };
     }
+    if (!acc[month][date]) {
+      acc[month][date] = [];
+    }
 
     const emotion = getEmotionById(mood.moodId);
     if (!emotion) {
