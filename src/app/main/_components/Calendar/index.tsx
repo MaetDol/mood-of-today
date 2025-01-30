@@ -111,7 +111,15 @@ export function Calendar({ moods }: Props) {
       return acc;
     }
 
-    acc[month][date].push(emotion.color);
+    const isEmpty = acc[month][date].length < 2;
+    const hasOtherColor = acc[month][date]
+      .slice(-2)
+      .some((it) => it !== emotion.color);
+
+    if (isEmpty || hasOtherColor) {
+      acc[month][date].push(emotion.color);
+    }
+
     return acc;
   }, {} as Record<string, Record<string, string[]>>);
 
