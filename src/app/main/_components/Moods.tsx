@@ -15,7 +15,7 @@ export function Moods({ moods }: Props) {
       {moods.map((mood) => (
         <li key={mood.id} className="flex items-center gap-2">
           <div
-            className={`w-8 h-8 rounded-full ${
+            className={`w-8 h-8 rounded-full shrink-0 ${
               Emotions.find((it) => it.id === mood.moodId)?.color ?? ""
             }`}
           />
