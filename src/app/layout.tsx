@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased
-        flex flex-col h-full max-w-[560px] mx-auto bg-slate-100 shadow-[0_0_0_1px_black] shadow-slate-300`}
+        flex flex-col h-full max-w-[560px] mx-auto bg-slate-100 shadow-[0_0_0_1px_black] shadow-slate-300
+        overflow-hidden
+        `}
       >
         {children}
       </body>
