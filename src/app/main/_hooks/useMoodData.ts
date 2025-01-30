@@ -9,11 +9,13 @@ export function useMoodData() {
     key: localStorageService.Key.MOODS,
     defaultValue: [],
     onLoadData: (data) =>
-      data.map((it) => ({ ...it, createdAt: new Date(it.createdAt) })),
+      data
+        .map((it) => ({ ...it, createdAt: new Date(it.createdAt) }))
+        .toSorted((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
   });
 
   const addMood = (mood: Mood) => {
-    setMoods([...moods, mood]);
+    setMoods([mood, ...moods]);
   };
 
   return { moods, addMood };
