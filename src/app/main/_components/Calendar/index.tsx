@@ -1,12 +1,16 @@
 import { Dates } from "@/app/main/_components/Calendar/components/Dates";
 import { useEmotions } from "@/app/main/_hooks/useEmotions";
-import { useMoodData } from "@/app/main/_hooks/useMoodData";
 import { useDragHandler } from "@/shared/hooks/useDragHandler";
+import { Mood } from "@/shared/types/mood";
 import { useRef, useState } from "react";
 
 const SLIDE_TRANSITION_DURATION = 300;
 
-export function Calendar() {
+interface Props {
+  moods: Mood[];
+}
+
+export function Calendar({ moods }: Props) {
   const [calendar, setCalendar] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
@@ -91,7 +95,6 @@ export function Calendar() {
   const nextCalendar = getRelativeCalendar(calendar, +1);
 
   const { getEmotionById } = useEmotions();
-  const { moods } = useMoodData();
   const colors = moods.reduce((acc, mood) => {
     const month = mood.createdAt.getMonth() + 1;
     const date = mood.createdAt.getDate();

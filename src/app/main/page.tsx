@@ -6,7 +6,7 @@ import { Moods } from "@/app/main/_components/Moods";
 import { useMoodData } from "@/app/main/_hooks/useMoodData";
 
 export default function Page() {
-  const { addMood, getMoodsByDate } = useMoodData();
+  const { addMood, getMoodsByDate, moods } = useMoodData();
 
   return (
     <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen">
@@ -16,7 +16,7 @@ export default function Page() {
       </div>
 
       <div className="mt-auto justify-center flex">
-        <Calendar />
+        <Calendar moods={moods} />
       </div>
     </main>
   );
