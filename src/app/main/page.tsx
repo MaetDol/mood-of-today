@@ -18,7 +18,7 @@ export default function Page() {
   };
 
   return (
-    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen">
+    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-20">
       <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
         <MoodInput onCreateMood={(mood) => addMood(mood)} />
         <Moods moods={getMoodsByDate(new Date())} />
