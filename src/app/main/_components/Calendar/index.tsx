@@ -142,7 +142,7 @@ export function Calendar({ moods }: Props) {
         <div>수</div>
         <div>목</div>
         <div>금</div>
-        <div className="text-blue-600">토</div>
+        <div className="text-blue-700">토</div>
       </div>
 
       <div
