@@ -2,19 +2,30 @@ import { Dates } from "@/app/main/_components/Calendar/components/Dates";
 import { useEmotions } from "@/app/main/_hooks/useEmotions";
 import { useDragHandler } from "@/shared/hooks/useDragHandler";
 import { Mood } from "@/shared/types/mood";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SLIDE_TRANSITION_DURATION = 300;
 
 interface Props {
   moods: Mood[];
+  currentPage?: { year: number; month: number };
 }
 
-export function Calendar({ moods }: Props) {
+export function Calendar({ moods, currentPage }: Props) {
   const [calendar, setCalendar] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   });
+
+  useEffect(() => {
+    if (!currentPage?.month) return;
+    if (!currentPage?.year) return;
+
+    setCalendar({
+      year: currentPage.year,
+      month: currentPage.month,
+    });
+  }, [currentPage?.month, currentPage?.year]);
 
   const [isResetingPosition, setIsResetingPosition] = useState(false);
   const lastPositionTimeoutIdRef = useRef<number>(0);
@@ -127,7 +138,7 @@ export function Calendar({ moods }: Props) {
   );
 
   return (
-    <div className="text-slate-700 overflow-hidden p-4">
+    <div className="text-slate-700 overflow-hidden p-4 h-[360px]">
       <div className="flex justify-between mb-2">
         <span className="font-bold">
           {calendar.month.toString().padStart(2, "0")} 월
