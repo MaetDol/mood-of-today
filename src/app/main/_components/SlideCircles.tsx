@@ -53,26 +53,36 @@ export function SlideCircles({ circles, onChange }: Props) {
   const currentX = 12 - idx * 48;
 
   return (
-    <div className="w-[64px] overflow-hidden relative" {...dragHandlers}>
-      <div className="absolute h-full left-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
-      <div className="absolute h-full right-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
-      <div
-        className={`flex gap-2 w-fit ${
-          isDragging ? "transition-none" : "transition-transform"
-        }`}
-        style={{
-          transform: isDragging
-            ? `translateX(${currentX + translateX}px)`
-            : `translateX(${currentX}px)`,
-        }}
+    <div className="relative">
+      <span
+        className="absolute bottom-[calc(100%_+_16px)] left-1/2 -translate-x-1/2 whitespace-nowrap
+      bg-black/60 px-3 py-1 rounded text-white font-bold animate-bubble
+      "
       >
-        {circles.map((circle, i) => (
-          <div
-            key={circle.id}
-            style={{ transform: idx !== i ? "scale(0.95)" : "" }}
-            className={`rounded-full w-[40px] h-[40px] transition-transform ${circle.color}`}
-          />
-        ))}
+        {circles[idx].name}
+        <span className="bg-black/50 block w-3 h-3 rounded-full absolute top-[calc(100%_+_4px)] left-1/2 translate-x-[-24px] animate-bubble2" />
+      </span>
+      <div className="w-[64px] overflow-hidden relative" {...dragHandlers}>
+        <div className="absolute h-full left-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
+        <div className="absolute h-full right-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
+        <div
+          className={`flex gap-2 w-fit ${
+            isDragging ? "transition-none" : "transition-transform"
+          }`}
+          style={{
+            transform: isDragging
+              ? `translateX(${currentX + translateX}px)`
+              : `translateX(${currentX}px)`,
+          }}
+        >
+          {circles.map((circle, i) => (
+            <div
+              key={circle.id}
+              style={{ transform: idx !== i ? "scale(0.95)" : "" }}
+              className={`rounded-full w-[40px] h-[40px] transition-transform ${circle.color}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
