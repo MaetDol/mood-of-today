@@ -17,14 +17,26 @@ export function Calendar({ moods, currentPage }: Props) {
     month: new Date().getMonth() + 1,
   });
 
+  const [fadeInOut, setFadeInOut] = useState(false);
+
   useEffect(() => {
     if (!currentPage?.month) return;
     if (!currentPage?.year) return;
 
+    const { month, year } = currentPage;
+    if (calendar.month === month && calendar.year === year) {
+      return;
+    }
+
+    setFadeInOut(true);
     setCalendar({
       year: currentPage.year,
       month: currentPage.month,
     });
+
+    window.setTimeout(() => {
+      setFadeInOut(false);
+    }, SLIDE_TRANSITION_DURATION);
   }, [currentPage?.month, currentPage?.year]);
 
   const [isResetingPosition, setIsResetingPosition] = useState(false);
@@ -157,11 +169,11 @@ export function Calendar({ moods, currentPage }: Props) {
       </div>
 
       <div
-        className={`flex gap-2 relative ${
+        className={`flex gap-2 relative transition-opacity ${
           isResetingPosition || isDragging
             ? ""
             : "transition-transform duration-300"
-        }`}
+        } ${fadeInOut ? "opacity-0" : ""}`}
         {...dragHandlers}
         style={{
           transform: `translateX(${translateX}px)`,
