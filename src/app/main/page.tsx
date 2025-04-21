@@ -62,7 +62,10 @@ export default function Page() {
         visible={isShowBottomSheet}
         onClose={() => closeBottomSheet()}
       >
-        <MoodInput onCreateMood={(mood) => onMoodCreate(mood)} />
+        <MoodInput
+          onCreateMood={(mood) => onMoodCreate(mood)}
+          isShowMoodLabel={isShowBottomSheet}
+        />
       </BottomSheet>
     </main>
   );

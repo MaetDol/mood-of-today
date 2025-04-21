@@ -7,9 +7,10 @@ import { useRef } from "react";
 
 interface Props {
   onCreateMood: (mood: Mood) => void;
+  isShowMoodLabel?: boolean;
 }
 
-export function MoodInput({ onCreateMood }: Props) {
+export function MoodInput({ onCreateMood, isShowMoodLabel }: Props) {
   const { Emotions } = useEmotions();
   const moodRef = useRef<(typeof Emotions)[number]>(null);
   const handleInput: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -53,7 +54,12 @@ export function MoodInput({ onCreateMood }: Props) {
 
   return (
     <div className="flex items-center gap-4 shrink-0">
-      <SlideCircles circles={Emotions} onChange={handleChangeMood} />
+      <SlideCircles
+        circles={Emotions}
+        onChange={handleChangeMood}
+        showBubbleLabel={isShowMoodLabel}
+      />
+
       <input
         className="px-3 py-2 rounded-full border border-slate-400
           w-[200px] placeholder:slate-400 "

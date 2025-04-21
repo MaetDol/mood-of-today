@@ -8,9 +8,10 @@ interface Props {
     id: number;
   }[];
   onChange?: (idx: number) => void;
+  showBubbleLabel?: boolean;
 }
 
-export function SlideCircles({ circles, onChange }: Props) {
+export function SlideCircles({ circles, onChange, showBubbleLabel }: Props) {
   const [idx, setIdx] = useState(0);
   const [translateX, setTranslateX] = useState(0);
 
@@ -55,13 +56,17 @@ export function SlideCircles({ circles, onChange }: Props) {
   return (
     <div className="relative">
       <span
-        className="absolute bottom-[calc(100%_+_16px)] left-1/2 -translate-x-1/2 whitespace-nowrap
+        className={`absolute bottom-[calc(100%_+_16px)] left-1/2 -translate-x-1/2 whitespace-nowrap
       bg-black/60 px-3 py-1 rounded text-white font-bold animate-bubble
-      "
+      delay-200 transition-opacity duration-300 ${
+        showBubbleLabel ? "opacity-100" : "opacity-0"
+      }
+      `}
       >
         {circles[idx].name}
         <span className="bg-black/50 block w-3 h-3 rounded-full absolute top-[calc(100%_+_4px)] left-1/2 translate-x-[-24px] animate-bubble2" />
       </span>
+
       <div className="w-[64px] overflow-hidden relative" {...dragHandlers}>
         <div className="absolute h-full left-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
         <div className="absolute h-full right-0 top-0 shadow-[0_0_16px_2px] shadow-white z-1" />
