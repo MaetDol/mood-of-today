@@ -149,6 +149,20 @@ export function Calendar({ moods, currentPage }: Props) {
     {}
   );
 
+  const [focusedDate, setFocusedDate] = useState<{
+    year: number;
+    month: number;
+    date: number;
+  }>({
+    date: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+  });
+
+  const focusDate = (year: number, month: number, date: number) => {
+    setFocusedDate({ year, month, date });
+  };
+
   return (
     <div className="text-slate-700 overflow-hidden p-4 h-[360px]">
       <div className="flex justify-between mb-2">
@@ -187,11 +201,20 @@ export function Calendar({ moods, currentPage }: Props) {
             month={prevCalendar.month}
             year={prevCalendar.year}
             colors={colors}
+            focusedDate={focusedDate}
           />
         </div>
+
         <div ref={dateRef} key={`${calendar.year}_${calendar.month}`}>
-          <Dates month={calendar.month} year={calendar.year} colors={colors} />
+          <Dates
+            month={calendar.month}
+            year={calendar.year}
+            colors={colors}
+            focusedDate={focusedDate}
+            onClickDate={(y, m, d) => focusDate(y, m, d)}
+          />
         </div>
+
         <div
           className="absolute left-[calc(100%_+_16px)]"
           key={`${nextCalendar.year}_${nextCalendar.month}`}
@@ -200,6 +223,7 @@ export function Calendar({ moods, currentPage }: Props) {
             month={nextCalendar.month}
             year={nextCalendar.year}
             colors={colors}
+            focusedDate={focusedDate}
           />
         </div>
       </div>

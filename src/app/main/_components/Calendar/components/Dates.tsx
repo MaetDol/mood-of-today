@@ -33,12 +33,21 @@ justify-items-center gap-x-6"
             onClick={() => onClickDate?.(year, m, date)}
           >
             {isSameDate(year, m, date, focusedDate) && (
-              <span
-                className="absolute rounded-full w-2 h-2 bg-blue-400 
-                top-[-2px] left-[-2px] z-10"
-              />
+              <>
+                <span
+                  className="absolute rounded w-5 h-5 bg-slate-400
+                left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0
+                "
+                />
+                <span className="z-1 relative text-white font-bold">
+                  {date}
+                </span>
+              </>
             )}
-            <span className="z-1 relative">{date}</span>
+
+            {!isSameDate(year, m, date, focusedDate) && (
+              <span className="z-1 relative">{date}</span>
+            )}
           </button>
           <ColorBlock colors={colors} month={m} date={date} />
         </div>
