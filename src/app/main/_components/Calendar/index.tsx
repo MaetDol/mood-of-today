@@ -9,9 +9,10 @@ const SLIDE_TRANSITION_DURATION = 300;
 interface Props {
   moods: Mood[];
   currentPage?: { year: number; month: number };
+  onChangeFocusedDate?: (year: number, month: number, date: number) => void;
 }
 
-export function Calendar({ moods, currentPage }: Props) {
+export function Calendar({ moods, currentPage, onChangeFocusedDate }: Props) {
   const [calendar, setCalendar] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
@@ -159,8 +160,17 @@ export function Calendar({ moods, currentPage }: Props) {
     year: new Date().getFullYear(),
   });
 
+  useEffect(() => {
+    onChangeFocusedDate?.(
+      focusedDate.year,
+      focusedDate.month,
+      focusedDate.date
+    );
+  }, []);
+
   const focusDate = (year: number, month: number, date: number) => {
     setFocusedDate({ year, month, date });
+    onChangeFocusedDate?.(year, month, date);
   };
 
   return (

@@ -39,14 +39,43 @@ export default function Page() {
     });
   };
 
+  const [focusedDate, setFocusedDate] = useState<{
+    year: number;
+    month: number;
+    date: number;
+  }>({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    date: new Date().getDate(),
+  });
+
+  const focusDate = (year: number, month: number, date: number) => {
+    setFocusedDate({
+      year,
+      month,
+      date,
+    });
+  };
+
+  const targetDate = new Date(
+    focusedDate.year,
+    focusedDate.month - 1,
+    focusedDate.date
+  );
+  const moodsByDate = getMoodsByDate(targetDate);
+
   return (
     <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-32 relative">
       <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
-        <Moods moods={getMoodsByDate(new Date())} />
+        <Moods moods={moodsByDate} />
       </div>
 
       <div className="mt-auto justify-center flex">
-        <Calendar moods={moods} currentPage={currentPage} />
+        <Calendar
+          moods={moods}
+          currentPage={currentPage}
+          onChangeFocusedDate={focusDate}
+        />
       </div>
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
