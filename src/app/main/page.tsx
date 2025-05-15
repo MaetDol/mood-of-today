@@ -65,7 +65,7 @@ export default function Page() {
   const moodsByDate = getMoodsByDate(targetDate);
 
   return (
-    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-32 relative">
+    <main className="bg-white px-5 py-6 flex flex-col flex-1 max-h-screen pb-32 relative overflow-hidden">
       <div className="flex-1 shrink-0 flex flex-col gap-3 min-h-0">
         <Moods moods={moodsByDate} />
       </div>
