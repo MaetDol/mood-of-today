@@ -1,12 +1,21 @@
+import { ColorBlock } from "@/app/main/_components/Calendar/components/ColorBlock";
 import { getDates } from "@/shared/utils/getDates";
 
 interface Props {
   year: number;
   month: number;
   colors: Record<string, Record<string, string[]>>;
+  onClickDate?: (year: number, month: number, date: number) => void;
+  focusedDate?: { year: number; month: number; date: number };
 }
 
-export function Dates({ month, year, colors }: Props) {
+export function Dates({
+  month,
+  year,
+  colors,
+  focusedDate,
+  onClickDate,
+}: Props) {
   return (
     <div
       className="grid grid-cols-[repeat(7,16px)] 
@@ -19,44 +28,35 @@ justify-items-center gap-x-6"
             m !== month ? "opacity-20" : ""
           }`}
         >
-          {date}
-          <div className="rounded-[2px] overflow-hidden relative w-4 h-4 z-0">
-            <div
-              className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[-8px] top-[-8px] z-4
-                ${getColor(colors, m, date, 0)}
-              `}
-            />
-            <div
-              className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[6px] top-[-6px] z-3
-                ${getColor(colors, m, date, 1)}
-              `}
-            />
-            <div
-              className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[-10px] top-[6px] z-2
-                ${getColor(colors, m, date, 2)}
-              `}
-            />
-            <div
-              className={`absolute rounded-full opacity-80 w-[18px] h-[18px]
-                left-[6px] top-[6px] z-1
-                ${getColor(colors, m, date, 3)}
-              `}
-            />
-          </div>
+          <button
+            className="w-full relative"
+            onClick={() => onClickDate?.(year, m, date)}
+          >
+            {isSameDate(year, m, date, focusedDate) && (
+              <span
+                className="absolute rounded-full w-2 h-2 bg-blue-400 
+                top-[-2px] left-[-2px] z-10"
+              />
+            )}
+            <span className="z-1 relative">{date}</span>
+          </button>
+          <ColorBlock colors={colors} month={m} date={date} />
         </div>
       ))}
     </div>
   );
 }
 
-function getColor(
-  colorSet: Props["colors"],
+function isSameDate(
+  year: number,
   month: number,
   date: number,
-  idx: number
+  target?: { year: number; month: number; date: number }
 ) {
-  return colorSet[month]?.[date]?.[idx] ?? "bg-slate-100";
+  return (
+    target &&
+    year === target.year &&
+    month === target.month &&
+    date === target.date
+  );
 }
